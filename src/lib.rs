@@ -1,2 +1,2 @@
-mod console;
-mod file;
+pub mod console;
+pub mod file;
