@@ -19,6 +19,10 @@ pub fn read_string() -> Result<String, String> {
 	}
 }
 
+pub fn pad_right(text: &str, width: usize) -> String {
+	format!("{:width$}", text, width=width)
+}
+
 pub fn read_number<T: Num>() -> Result<T, String> {
 	let input = match read_string() {
 		Ok(res) => { res }
