@@ -1,5 +1,5 @@
 use std::fs::{File, OpenOptions};
-use std::io::{BufReader, Read};
+use std::io::{BufReader, Read, Write};
 use std::path::Path;
 
 pub enum FileAccess {
@@ -63,4 +63,16 @@ pub fn create_file(path: &str) -> Result<File, String> {
 		Ok(file) => Ok(file),
 		Err(_) => Err(format!("Failed to create file '{}'", path))
 	};
+}
+
+pub fn rewrite_file(path: &str, content: String) -> Result<(), String> {
+	let mut file = match open_file(path, FileAccess::Write, true) {
+		Ok(res) => res,
+		Err(str) => return Err(str)
+	};
+
+	return match file.write_all(content.as_ref()) {
+		Ok(_) => Ok(()),
+		Err(_) => Err(format!("Could not write to file {}", path))
+	}
 }
